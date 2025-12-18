@@ -1,18 +1,14 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './App.css';
 import Projects from './Projects';
 import Skills from './Skills';
 import Contact from './Contact';
 import FlappyBird from './flappybird';
-import ProfileCard from './ProfileCard'; // React Bits ProfileCard
-import './ProfileCard.css';
-import { ThemeContext } from './ThemeContext';
-import GlassIcons from './GlassIcons';
-import ParticleBackground from './components/ParticleBackground';
-import TypingAnimation from './components/TypingAnimation';
 
-import useIntersectionObserver from './hooks/useIntersectionObserver';
+
+// Theme Context
+const ThemeContext = React.createContext();
 
 function ThemeProvider({ children }) {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -45,82 +41,90 @@ function ThemeProvider({ children }) {
 
 function About() {
   const [showIntro, setShowIntro] = useState(true);
-  const [aboutRef, isAboutVisible, hasAboutIntersected] = useIntersectionObserver();
-  const [skillsRef, isSkillsVisible, hasSkillsIntersected] = useIntersectionObserver();
+  const [isAnimating, setIsAnimating] = useState(false);
+  const cardRef = useRef(null);
 
   useEffect(() => {
-    const timer = setTimeout(() => setShowIntro(false), 3000);
+    const timer = setTimeout(() => {
+      setShowIntro(false);
+    }, 3000); // Show intro for 3 seconds
+
     return () => clearTimeout(timer);
   }, []);
 
-  const programmingItems = [
-    { icon: <img src="/images/logohtml.png" alt="HTML" className="skill-logo" />, label: 'HTML', color: 'orange' },
-    { icon: <img src="/images/logocss.png" alt="CSS" className="skill-logo" />, label: 'CSS', color: 'blue' },
-    { icon: <img src="/images/logojavascript.png" alt="JavaScript" className="skill-logo" />, label: 'JavaScript', color: 'orange' }
-  ];
+  const handleMouseMove = (e) => {
+    if (!cardRef.current) return;
 
-  const aplikasiItems = [
-    { icon: <img src="/images/logophotoshop.png" alt="Photoshop" className="skill-logo" />, label: 'Photoshop', color: 'purple' },
-    { icon: <img src="/images/logovscode.png" alt="VSCode" className="skill-logo" />, label: 'VSCode', color: 'blue' },
-    { icon: <img src="/images/logo CPT.png" alt="Cisco Packet Tracer" className="skill-logo" />, label: 'Cisco Packet Tracer', color: 'green' }
-  ];
+    setIsAnimating(true);
+
+    const card = cardRef.current;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    const rotateX = (y - centerY) / 10;
+    const rotateY = (centerX - x) / 10;
+
+    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+  };
+
+  const handleMouseLeave = () => {
+    if (!cardRef.current) return;
+    setIsAnimating(false);
+    cardRef.current.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
+  };
 
   return (
     <div className="page">
-      <ParticleBackground />
       {showIntro && (
         <div className="intro-animation">
           <div className="intro-text">
-            <span className="hi">
-              <TypingAnimation text="Hi," speed={150} />
-            </span>
-            <span className="name">
-              <TypingAnimation text="I'm Ajie Ahmad Fathi Fauzi" speed={80} delay={800} />
-            </span>
+            <span className="hi">Hi,</span>
+            <span className="name">I'm Ajie Ahmad Fathi Fauzi</span>
           </div>
         </div>
       )}
 
-      <section
-        id="about"
-        className={`section about ${hasAboutIntersected ? 'animate-in' : ''}`}
-        ref={aboutRef}
-      >
+      <section id="about" className="section about">
         <div className="container">
           <h2>About Me</h2>
           <div className="about-content">
-            <div className='profile-card-container'>
-               <ProfileCard
-                avatarUrl="/profile.jpg"
-                miniAvatarUrl="/profile.jpg"
-                grainUrl='/grain.png'
-                iconUrl='/holo-mask.svg'
-                name="Ajie Ahmad Fathi Fauzi"
-                title="Fresh Graduate"
-                handle="its_jie17"
-                contactText="Contact"
-                behindGlowEnabled={true} // ✅ BENAR
-                behindGlowColor="rgba(125, 190, 255, 0.67)"
-                behindGlowSize='50%'
-                innerGradient="linear-gradient(145deg,#60496e8c 0%,#71C4FF44 100%)"
-                enableTilt={true}
-                enableMobileTilt={false}
-                mobileTiltSensitivity={5}
-                showUserInfo={true} // Pastikan ini true
-                onContactClick={() => window.open('https://www.instagram.com/its_jie17/', '_blank')}
-              />
+            <div className={`profile-card ${isAnimating ? 'hologram' : ''}`} ref={cardRef} onMouseMove={(e) => handleMouseMove(e)} onMouseLeave={handleMouseLeave}>
+              <div className="profile-image">
+                <img src="/profile.jpg" alt="Profile" className="placeholder-image" />
+              </div>
+              <div className="profile-info">
+                <h3>Ajie Ahmad Fathi Fauzi</h3>
+                <p className="profile-title">Network Engineer</p>
+                <p className="profile-description">
+                  Comingsoon...
+                </p>
+                <div className="profile-stats">
+                  <div className="stat">
+                    <span className="stat-number">&lt; 1</span>
+                    <span className="stat-label">Years Experience</span>
+                  </div>
+                  <div className="stat">
+                    <span className="stat-number">0</span>
+                    <span className="stat-label">Projects Completed</span>
+                  </div>
+                  <div className="stat">
+                    <span className="stat-number">0%</span>
+                    <span className="stat-label">Client Satisfaction</span>
+                  </div>
+                </div>
+              </div>
             </div>
-
             <div className="about-text">
-              <p>Selamat datang di dunia saya! Saya adalah mahasiswa Telkom University yang akan lulus D3 Teknologi Telekomunikasi pada tahun 2025. Dengan semangat yang membara untuk inovasi teknologi, saya berkomitmen untuk membangun jaringan yang menghubungkan dunia.</p>
-              <p>Dari troubleshooting jaringan hingga eksplorasi teknologi masa depan, saya siap menghadapi tantangan dan berkontribusi pada kemajuan digital. Mari kita kolaborasi dan ciptakan masa depan yang lebih terhubung!</p>
-            </div>
-
-            <div className="skills-section" ref={skillsRef}>
-              <h3>Bahasa Pemrograman</h3>
-              <GlassIcons items={programmingItems} />
-              <h3>Aplikasi</h3>
-              <GlassIcons items={aplikasiItems} />
+              <p>
+                Comingsoon.
+              </p>
+              <p>
+                Comingsoon..
+              </p>
             </div>
           </div>
         </div>
@@ -183,17 +187,21 @@ function App() {
   const [showIntro, setShowIntro] = useState(true);
 
   useEffect(() => {
-    if (showIntro) {
-      const timer = setTimeout(() => setShowIntro(false), 3000);
-      return () => clearTimeout(timer);
-    }
-  }, [showIntro]);
+    const timer = setTimeout(() => {
+      setShowIntro(false);
+    }, 3000); // Show intro for 3 seconds
 
-  const handleAboutClick = () => setShowIntro(true);
+    return () => clearTimeout(timer);
+  }, [showIntro]); // Reset timer when showIntro changes
+
+  const handleAboutClick = () => {
+    setShowIntro(true); // Trigger intro animation again
+  };
 
   return (
     <ThemeProvider>
       <Router>
+
         <div className="App">
           <Header />
           {showIntro && (
@@ -208,11 +216,11 @@ function App() {
 
           <div className="main-content">
             <Routes>
+              <Route path="/projects" element={<FlappyBird autoStart />} />
               <Route path="/" element={<About />} />
               <Route path="/projects" element={<Projects />} />
               <Route path="/skills" element={<Skills />} />
               <Route path="/contact" element={<Contact />} />
-              <Route path="/game" element={<FlappyBird autoStart={true} />} />
             </Routes>
           </div>
         </div>

@@ -1,0 +1,49 @@
+import './App.css';
+
+function Projects() {
+  return (
+    <div className="page">
+      <header className="header">
+        <div className="container">
+          <h1 className="logo">My Projects</h1>
+        </div>
+      </header>
+
+      <section className="section projects">
+        <div className="container">
+          <div className="project-grid">
+            <div className="project-card">
+              <h3>Project 1</h3>
+              <p>A web application built with React and Node.js.</p>
+              <div className="project-tech">
+                <span className="tech-tag">React</span>
+                <span className="tech-tag">Node.js</span>
+                <span className="tech-tag">MongoDB</span>
+              </div>
+            </div>
+            <div className="project-card">
+              <h3>Project 2</h3>
+              <p>An e-commerce site using modern web technologies.</p>
+              <div className="project-tech">
+                <span className="tech-tag">React</span>
+                <span className="tech-tag">Express</span>
+                <span className="tech-tag">Stripe</span>
+              </div>
+            </div>
+            <div className="project-card">
+              <h3>Project 3</h3>
+              <p>A portfolio website showcasing my work.</p>
+              <div className="project-tech">
+                <span className="tech-tag">React</span>
+                <span className="tech-tag">CSS3</span>
+                <span className="tech-tag">JavaScript</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+export default Projects;

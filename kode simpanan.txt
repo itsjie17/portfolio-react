@@ -1,0 +1,226 @@
+import React, { useState, useEffect, useRef, useContext } from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import './App.css';
+import Projects from './Projects';
+import Skills from './Skills';
+import Contact from './Contact';
+
+// Theme Context
+const ThemeContext = React.createContext();
+
+function ThemeProvider({ children }) {
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      setIsDarkMode(true);
+      document.body.classList.add('dark-mode');
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    setIsDarkMode(!isDarkMode);
+    if (!isDarkMode) {
+      document.body.classList.add('dark-mode');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.body.classList.remove('dark-mode');
+      localStorage.setItem('theme', 'light');
+    }
+  };
+
+  return (
+    <ThemeContext.Provider value={{ isDarkMode, toggleTheme }}>
+      {children}
+    </ThemeContext.Provider>
+  );
+}
+
+function About() {
+  const [showIntro, setShowIntro] = useState(true);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const cardRef = useRef(null);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowIntro(false);
+    }, 3000); // Show intro for 3 seconds
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handleMouseMove = (e) => {
+    if (!cardRef.current) return;
+
+    setIsAnimating(true);
+
+    const card = cardRef.current;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    const rotateX = (y - centerY) / 10;
+    const rotateY = (centerX - x) / 10;
+
+    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+  };
+
+  const handleMouseLeave = () => {
+    if (!cardRef.current) return;
+    setIsAnimating(false);
+    cardRef.current.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
+  };
+
+  return (
+    <div className="page">
+      {showIntro && (
+        <div className="intro-animation">
+          <div className="intro-text">
+            <span className="hi">Hi,</span>
+            <span className="name">I'm Ajie Ahmad Fathi Fauzi</span>
+          </div>
+        </div>
+      )}
+      <header className="header"> #dari sini dihapus
+        <div className="container">
+          <h1 className="logo">About Me</h1>
+        </div>
+      </header> #sampe sini
+
+      <section id="about" className="section about">
+        <div className="container">
+          <h2>About Me</h2>
+          <div className="about-content">
+            <div className={`profile-card ${isAnimating ? 'hologram' : ''}`} ref={cardRef} onMouseMove={(e) => handleMouseMove(e)} onMouseLeave={handleMouseLeave}>
+              <div className="profile-image">
+                <img src="/profile.jpg" alt="Profile" className="placeholder-image" />
+              </div>
+              <div className="profile-info">
+                <h3>Ajie Ahmad Fathi Fauzi</h3>
+                <p className="profile-title">Network Engineer</p>
+                <p className="profile-description">
+                  Passionate developer with experience in web technologies.
+                  I love creating beautiful and functional websites using modern tools and frameworks.
+                </p>
+                <div className="profile-stats">
+                  <div className="stat">
+                    <span className="stat-number">&lt; 1</span>
+                    <span className="stat-label">Years Experience</span>
+                  </div>
+                  <div className="stat">
+                    <span className="stat-number">0</span>
+                    <span className="stat-label">Projects Completed</span>
+                  </div>
+                  <div className="stat">
+                    <span className="stat-number">0%</span>
+                    <span className="stat-label">Client Satisfaction</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="about-text">
+              <p>
+                Hello! I'm a passionate developer with experience in web technologies.
+                I love creating beautiful and functional websites using modern tools and frameworks.
+              </p>
+              <p>
+                My journey in web development started with a curiosity about how websites work,
+                and it has evolved into a career where I get to build amazing digital experiences.
+                I specialize in React, Node.js, and modern web technologies.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function Sidebar({ onAboutClick }) {
+  const { isDarkMode, toggleTheme } = useContext(ThemeContext);
+
+  return (
+    <div className="sidebar">
+      <div className="sidebar-content">
+        <div className="sidebar-profile">
+          <div className="profile-image-sidebar">
+            <img src="/profile.jpg" alt="Profile" className="placeholder-image-sidebar" />
+          </div>
+          <div className="profile-name-sidebar">
+            Ajie Ahmad Fathi Fauzi
+          </div>
+        </div>
+        <div className="theme-toggle-container-sidebar">
+          <button onClick={toggleTheme} className="theme-toggle">
+            {isDarkMode ? '☀️ Light Mode' : '🌙 Dark Mode'}
+          </button>
+        </div>
+        <Link to="/" className="nav-button" onClick={onAboutClick}>
+          <span className="nav-icon">👤</span>
+          <span>About</span>
+        </Link>
+        <Link to="/projects" className="nav-button">
+          <span className="nav-icon">💼</span>
+          <span>Projects</span>
+        </Link>
+        <Link to="/skills" className="nav-button">
+          <span className="nav-icon">🛠️</span>
+          <span>Skills</span>
+        </Link>
+        <Link to="/contact" className="nav-button">
+          <span className="nav-icon">📧</span>
+          <span>Contact</span>
+        </Link>
+      </div>
+    </div>
+  );
+}
+
+function App() {
+  const [showIntro, setShowIntro] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowIntro(false);
+    }, 3000); // Show intro for 3 seconds
+
+    return () => clearTimeout(timer);
+  }, [showIntro]); // Reset timer when showIntro changes
+
+  const handleAboutClick = () => {
+    setShowIntro(true); // Trigger intro animation again
+  };
+
+  return (
+    <ThemeProvider>
+      <Router>
+        <div className="App">
+          {showIntro && (
+            <div className="intro-animation">
+              <div className="intro-text">
+                <span className="hi">Hi,</span>
+                <span className="name">I'm Ajie Ahmad Fathi Fauzi</span>
+              </div>
+            </div>
+          )}
+          {!showIntro && <Sidebar onAboutClick={handleAboutClick} />}
+
+          <div className="main-content">
+            <Routes>
+              <Route path="/" element={<About />} />
+              <Route path="/projects" element={<Projects />} />
+              <Route path="/skills" element={<Skills />} />
+              <Route path="/contact" element={<Contact />} />
+            </Routes>
+          </div>
+        </div>
+      </Router>
+    </ThemeProvider>
+  );
+}
+
+export default App;

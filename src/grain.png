@@ -1,0 +1,2 @@
+// Alternatif: buat grain di runtime jika perlu
+const grainBase64 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEAAQMAAABmvDolAAAABlBMVEUAAAC6gKQ+2B5fAAAAH0lEQVRoge3BAQ0AAADCoPdPbQ43oAAAAAAAAAAAHwYhAABN+LCxAAAAAElFTkSuQmCC';
