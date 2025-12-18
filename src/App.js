@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './App.css';
 import Projects from './Projects';
 import Skills from './Skills';
