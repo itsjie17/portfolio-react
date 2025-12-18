@@ -11,7 +11,7 @@ import { ThemeContext } from './ThemeContext';
 import GlassIcons from './GlassIcons';
 import ParticleBackground from './components/ParticleBackground';
 import TypingAnimation from './components/TypingAnimation';
-
+import { HashRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import useIntersectionObserver from './hooks/useIntersectionObserver';
 
 function ThemeProvider({ children }) {
@@ -54,15 +54,15 @@ function About() {
   }, []);
 
   const programmingItems = [
-    { icon: <img src="/images/logohtml.png" alt="HTML" className="skill-logo" />, label: 'HTML', color: 'orange' },
-    { icon: <img src="/images/logocss.png" alt="CSS" className="skill-logo" />, label: 'CSS', color: 'blue' },
-    { icon: <img src="/images/logojavascript.png" alt="JavaScript" className="skill-logo" />, label: 'JavaScript', color: 'orange' }
+    { icon: <img src= {process.env.PUBLIC_URL + "/images/logohtml.png"} alt="HTML" className="skill-logo" />, label: 'HTML', color: 'orange' },
+    { icon: <img src= {process.env.PUBLIC_URL + "/images/logocss.png"} alt="CSS" className="skill-logo" />, label: 'CSS', color: 'blue' },
+    { icon: <img src= {process.env.PUBLIC_URL + "/images/logojavascript.png"} alt="JavaScript" className="skill-logo" />, label: 'JavaScript', color: 'orange' }
   ];
 
   const aplikasiItems = [
-    { icon: <img src="/images/logophotoshop.png" alt="Photoshop" className="skill-logo" />, label: 'Photoshop', color: 'purple' },
-    { icon: <img src="/images/logovscode.png" alt="VSCode" className="skill-logo" />, label: 'VSCode', color: 'blue' },
-    { icon: <img src="/images/logo CPT.png" alt="Cisco Packet Tracer" className="skill-logo" />, label: 'Cisco Packet Tracer', color: 'green' }
+    { icon: <img src= {process.env.PUBLIC_URL + "/images/logophotoshop.png"} alt="Photoshop" className="skill-logo" />, label: 'Photoshop', color: 'purple' },
+    { icon: <img src= {process.env.PUBLIC_URL + "/images/logovscode.png"} alt="VSCode" className="skill-logo" />, label: 'VSCode', color: 'blue' },
+    { icon: <img src= {process.env.PUBLIC_URL + "/images/logo CPT.png"} alt="Cisco Packet Tracer" className="skill-logo" />, label: 'Cisco Packet Tracer', color: 'green' }
   ];
 
   return (
@@ -91,10 +91,10 @@ function About() {
           <div className="about-content">
             <div className='profile-card-container'>
                <ProfileCard
-                avatarUrl="/profile.jpg"
-                miniAvatarUrl="/profile.jpg"
-                grainUrl='/grain.png'
-                iconUrl='/holo-mask.svg'
+                avatarUrl= {process.env.PUBLIC_URL + "/profile.jpg"}
+                miniAvatarUrl={process.env.PUBLIC_URL + "/profile.jpg"}
+                grainUrl={process.env.PUBLIC_URL + '/grain.png'}
+                iconUrl={process.env.PUBLIC_URL + '/holo-mask.svg'}
                 name="Ajie Ahmad Fathi Fauzi"
                 title="Fresh Graduate"
                 handle="its_jie17"
@@ -147,7 +147,7 @@ function Sidebar({ onAboutClick }) {
       <div className="sidebar-content">
         <div className="sidebar-profile">
           <div className="profile-image-sidebar">
-            <img src="/profile.jpg" alt="Profile" className="placeholder-image-sidebar" />
+            <img src={process.env.PUBLIC_URL + "/profile.jpg"} alt="Profile" className="placeholder-image-sidebar" />
           </div>
           <div className="profile-name-sidebar">
             Ajie Ahmad Fathi Fauzi

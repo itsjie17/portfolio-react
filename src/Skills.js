@@ -103,11 +103,11 @@ function Skills() {
                   <span>Linux</span>
                 </div>
                 <div className="skill">
-                  <img src="/images/logo autocad.png" alt="AutoCAD" />
+                  <img src= {process.env.PUBLIC_URL + "/images/logo autocad.png"} alt="AutoCAD" />
                   <span>AutoCAD</span>
                 </div>
                 <div className="skill">
-                  <img src="/images/logo CPT.png" alt="Cisco Packet Tracer" />
+                  <img src= {process.env.PUBLIC_URL + "/images/logo CPT.png"} alt="Cisco Packet Tracer" />
                   <span>Cisco Packet Tracer</span>
                 </div>
               </div>
