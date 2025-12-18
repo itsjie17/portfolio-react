@@ -61,7 +61,7 @@ function About() {
   const aplikasiItems = [
     { icon: <img src= {process.env.PUBLIC_URL + "/images/logophotoshop.png"} alt="Photoshop" className="skill-logo" />, label: 'Photoshop', color: 'purple' },
     { icon: <img src= {process.env.PUBLIC_URL + "/images/logovscode.png"} alt="VSCode" className="skill-logo" />, label: 'VSCode', color: 'blue' },
-    { icon: <img src= {process.env.PUBLIC_URL + "/images/logo CPT.png"} alt="Cisco Packet Tracer" className="skill-logo" />, label: 'Cisco Packet Tracer', color: 'green' }
+    { icon: <img src= {process.env.PUBLIC_URL + "/images/logo-CPT.png"} alt="Cisco Packet Tracer" className="skill-logo" />, label: 'Cisco Packet Tracer', color: 'green' }
   ];
 
   return (
@@ -179,11 +179,17 @@ function Sidebar({ onAboutClick }) {
 }
 
 function App() {
-  const [showIntro, setShowIntro] = useState(true);
+  const [showIntro, setShowIntro] = useState(false);
+  const [introDone, setIntroDone] = useState(false);
+
+  useEffect(() => {
+    const startTimer = setTimeout(() => setShowIntro(true), 300);
+    return () => clearTimeout(startTimer);
+  }, []);
 
   useEffect(() => {
     if (showIntro) {
-      const timer = setTimeout(() => setShowIntro(false), 3000);
+      const endTimer = setTimeout(() => setShowIntro(false), setIntroDone(true), 3000);
       return () => clearTimeout(timer);
     }
   }, [showIntro]);
@@ -203,17 +209,21 @@ function App() {
               </div>
             </div>
           )}
-          {!showIntro && <Sidebar onAboutClick={handleAboutClick} />}
-
-          <div className="main-content">
-            <Routes>
-              <Route path="/" element={<About />} />
-              <Route path="/projects" element={<Projects />} />
-              <Route path="/skills" element={<Skills />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/game" element={<FlappyBird autoStart={true} />} />
-            </Routes>
-          </div>
+          {introDone && (
+            <>
+              <Header />
+              <Sidebar onAboutClick={() => {}} />
+              <div className="main-content">
+                <Routes>
+                  <Route path="/" element={<About />} />
+                  <Route path="/projects" element={<Projects />} />
+                  <Route path="/skills" element={<Skills />} />
+                  <Route path="/contact" element={<Contact />} />
+                  <Route path="/game" element={<FlappyBird autoStart={true} />} />
+                </Routes>
+              </div>
+            </>
+          )}
         </div>
       </Router>
     </ThemeProvider>
