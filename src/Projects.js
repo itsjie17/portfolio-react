@@ -9,7 +9,7 @@ function Projects() {
   const projects = [
     {
       id: 1,
-      title: "Flappy Bird Game",
+      title: "Click This",
       description: "Classic Flappy Bird game built with React and HTML5 Canvas. Features smooth animations, collision detection, and responsive controls.",
       tech: ["React", "Canvas API", "JavaScript"],
       image: "/flappybird-preview.png",
@@ -45,7 +45,7 @@ function Projects() {
       image: "/photoshop-preview.png",
       demo: "#",
       github: "#",
-      status: "Planning"
+      status: "Coming Soon"
     }
   ];
 

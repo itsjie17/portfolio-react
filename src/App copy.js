@@ -191,7 +191,7 @@ function About({ restartIntro = false, onIntroComplete }) {
               <p>Dari troubleshooting jaringan hingga eksplorasi teknologi masa depan, saya siap menghadapi tantangan dan berkontribusi pada kemajuan digital. Mari kita kolaborasi dan ciptakan masa depan yang lebih terhubung!</p>
             </div>
 
-            <div className={`skills-section ${hasSkillsIntersected ? 'animate-in' : ''}`} ref={skillsRef}>
+            <div className="skills-section" ref={skillsRef}>
               <h3>Bahasa Pemrograman</h3>
               <GlassIcons items={programmingItems} />
               <h3>Aplikasi</h3>

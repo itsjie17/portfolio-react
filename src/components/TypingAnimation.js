@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const TypingAnimation = ({ text, speed = 100, delay = 0 }) => {
+const TypingAnimation = ({ text, speed = 100, delay = 0, onComplete }) => {
   const [displayText, setDisplayText] = useState('');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
@@ -24,10 +24,11 @@ const TypingAnimation = ({ text, speed = 100, delay = 0 }) => {
         setCurrentIndex(prev => prev + 1);
       }, speed);
       return () => clearTimeout(timer);
-    } else if (hasStarted && currentIndex >= text.length) {
+    } else if (hasStarted && currentIndex >= text.length && !isComplete) {
       setIsComplete(true);
+      if (onComplete) onComplete();
     }
-  }, [currentIndex, text, speed, isComplete, hasStarted]);
+  }, [currentIndex, text, speed, isComplete, hasStarted, onComplete]);
 
   return (
     <span>

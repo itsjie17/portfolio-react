@@ -102,3 +102,137 @@
     grid-template-columns: repeat(3, 1fr);
   }
 }
+
+.glass-icons-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 25px;
+  margin: 20px 0 40px;
+}
+
+.glass-icon-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  min-width: 120px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: relative;
+}
+
+.glass-icon-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--icon-color, linear-gradient(135deg, #667eea 0%, #764ba2 100%));
+  opacity: 0.1;
+  z-index: -1;
+}
+
+.glass-icon-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.icon-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+}
+
+.skill-logo {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2));
+}
+
+.glass-icon-item span {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #333;
+  text-align: center;
+}
+
+.icon-label {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #333;
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Dark mode */
+.dark-mode .glass-icon-item {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark-mode .glass-icon-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.dark-mode .glass-icon-item span {
+  color: #ffffff;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .glass-icons-container {
+    gap: 15px;
+  }
+  
+  .glass-icon-item {
+    min-width: 100px;
+    padding: 15px;
+  }
+  
+  .skill-logo {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+@media (max-width: 480px) {
+  .glass-icons-container {
+    gap: 12px;
+  }
+  
+  .glass-icon-item {
+    min-width: 85px;
+    padding: 12px;
+  }
+  
+  .skill-logo {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .glass-icon-item span {
+    font-size: 0.9rem;
+  }
+}

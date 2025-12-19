@@ -391,13 +391,9 @@ body {
 .about-content {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-areas:
-    "profile about"
-    "skills skills";
-  gap: 40px;
-  align-items: start;
-  max-width: 1200px;
-  margin: 0 auto;
+  gap: 60px;
+  align-items: center;
+  max-width: 100%;
 }
 
 
@@ -644,25 +640,8 @@ body {
 
 /* Skills Section */
 .skills-section {
-  grid-area: skills;
+  margin-top: 30px;
   text-align: center;
-  margin: 40px auto 0;
-  padding: 40px;
-  background: rgba(255, 255, 255, 0.05);
-  background-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
-  max-width: 1000px;
-  opacity: 0;
-  transform: relateY(30px);
-  transition: all 0.8s ease-out;
-}
-
-.skills-section.animate-in {
-  opacity: 1;
-  transform: translateY(0);
 }
 
 .skills-section h3 {
@@ -741,7 +720,6 @@ body {
 }
 
 .profile-card-container {
-  grid-area: profile;
   width: 100%;
   max-width: 400px;
   margin: 0 auto;
